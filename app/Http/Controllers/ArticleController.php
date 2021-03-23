@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource('App\Article', 'article');
+    }
+
     public function index()
     {
         $articles = Article::all()->sortByDesc('created_at');
@@ -48,5 +54,5 @@ class ArticleController extends Controller
     public function show(Article $article)
     {
         return view('articles.show', ['article' => $article]);
-    }    
+    }
 }
