@@ -17,7 +17,7 @@ class ArticleController extends Controller
 
     public function index()
     {
-        $articles = Article::all()->sortByDesc('created_at')->load(['user', 'likes', 'tags']); 
+        $articles = Article::all()->sortByDesc('created_at')->load(['user', 'likes', 'tags']);
 
         return view('articles.index', compact('articles'));
     }
@@ -44,6 +44,7 @@ class ArticleController extends Controller
             $article->tags()->attach($tag);
         });
 
+        toastr()->success('投稿が完了しました！');
         return redirect()->route('articles.index');
     }
 
@@ -74,12 +75,14 @@ class ArticleController extends Controller
             $article->tags()->attach($tag);
         });
 
+        toastr()->success('更新が完了しました！');
         return redirect()->route('articles.index');
     }
 
     public function destroy(Article $article)
     {
         $article->delete();
+        toastr()->success('削除が完了しました！');
         return redirect()->route('articles.index');
     }
 
