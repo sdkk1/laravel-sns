@@ -41,6 +41,18 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    protected function authenticated(Request $request, $user)
+    {
+        toastr()->success('ログインしました！');
+        return redirect()->route('articles.index');
+    }
+
+    protected function loggedOut(Request $request)
+    {
+        toastr()->success('ログアウトしました！');
+        return redirect()->route('articles.index');
+    }
+
     public function redirectToProvider(string $provider)
     {
         return Socialite::driver($provider)->redirect();
@@ -61,6 +73,6 @@ class LoginController extends Controller
             'provider' => $provider,
             'email' => $providerUser->getEmail(),
             'token' => $providerUser->token,
-        ]);  
+        ]);
     }
 }

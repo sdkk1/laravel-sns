@@ -73,6 +73,12 @@ class RegisterController extends Controller
         ]);
     }
 
+    protected function registered(Request $request, $user)
+    {
+        toastr()->success('ようこそ！');
+        return redirect()->route('articles.index');
+    }
+
     public function showProviderUserRegistrationForm(Request $request, string $provider)
     {
         $token = $request->token;
